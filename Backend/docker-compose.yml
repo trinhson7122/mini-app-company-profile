@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: company_api_service
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=company_api
+      - POSTGRES_SERVER=postgres
+      - POSTGRES_PORT=5432
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:14.13
+    container_name: company_api_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: company_api
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
